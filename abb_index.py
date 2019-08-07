@@ -14,7 +14,7 @@ import sys
 
 
 def help_me():
-    """ Method to print a short help."""
+    """ Method to print a short help message.."""
     with open('README.md', 'r') as help_file:
         contents = help_file.read()
         print(contents)
@@ -22,19 +22,27 @@ def help_me():
 
 def add_abb(abb, abb_def, acro_index, abbs_file='abbs.json'):
     """ Method to add an abbreviation to abbreviations file.
+
+    Args:
+        abb (string): The acronym to be added.
+        abb_def (string): Definition of the acronym to be added.
+        acro_index (dict): Dictionary of already existed acronyms.
+        abbs_file (string): The file where the acronyms are being saved.
     """
+    abb = abb.lower()
     if abb not in acro_index:
         acro_index[abb] = abb_def
-        print(json.dumps(acro_index))
         with open(abbs_file, 'w') as json_file:
             json.dump(acro_index, json_file)
         print("New abbreviation has been added!")
+        # load the json file
+        acro_index = load_file()
     else:
         print("Abbreviation already exists!")
 
 
 def load_file(abbs_file='abbs.json'):
-    """ Loads a json file to dictionary"""
+    """ Loads a json file containing acronyms to a dictionary."""
     data = {}
     with open(abbs_file, 'r') as json_file:
         data = json.load(json_file)
@@ -45,6 +53,13 @@ def load_file(abbs_file='abbs.json'):
 
 def find_abb(usr_abb, acro_index):
     """ Method to search for user's abbreviation.
+
+    Args:
+        usr_abb (string): User's input arg.
+        acro_index (dict): Dictionary of existing acronyms.
+
+    Returns:
+        int: 0 if the acronym has been found, -1 else.
     """
     # make user's input case insensitive
     usr_abb = usr_abb.lower()
@@ -65,6 +80,10 @@ def find_abb(usr_abb, acro_index):
 
 def process_user_input(usr_input, acro_index):
     """ Method to process user input.
+
+    Args:
+        usr_input (str): User's input.
+        acro_index (dict): Dictionary of existing acronyms.
     """
     # load the json file
     acro_index = load_file()
@@ -84,9 +103,9 @@ def process_user_input(usr_input, acro_index):
 def main():
     """ main function """
     # read user's input
+    acro_index = load_file()
+    print("%d acronyms are available" % len(acro_index))
     while True:
-        # load the json file
-        acro_index = load_file()
         # search for the abb
         # return appropriate
         user_input = str(input())
