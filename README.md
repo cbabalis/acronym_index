@@ -5,7 +5,9 @@ Run the binary. Just be sure you have the json file with the acronyms next to it
 If no binary exists (like right now) just type
 > ./abb_index.py
 
-## Commands
+Now just type an acronym in order to discover its true meaning!
+
+## More Commands
 
 ### Help
 While running the program, just type 'help' or '-h'
